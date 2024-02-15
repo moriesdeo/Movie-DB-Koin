@@ -1,4 +1,4 @@
-package com.test.moviedbkoin.ui.utils.extensions
+package com.test.data.extensions
 
 import com.google.gson.Gson
 import java.lang.reflect.Type
