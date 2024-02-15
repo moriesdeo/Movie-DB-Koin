@@ -18,7 +18,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "MOVIE_BASE_URL", "\"https://api.themoviedb.org/\"")
         buildConfigField("String", "TSDB_API_KEY", "\"3/\"")
-        buildConfigField("String", "API_KEY", "\"d326fff658f490c8e464a6fa32642ca7\"")
     }
 
     buildFeatures {
@@ -47,6 +46,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
