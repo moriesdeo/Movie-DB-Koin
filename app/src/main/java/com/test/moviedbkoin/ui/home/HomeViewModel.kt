@@ -17,7 +17,7 @@ class HomeViewModel(
     val genreMovie = MutableLiveData<Resource<GenreData>>()
 
     init {
-        getTopRatedMovie()
+        getGenreMovie()
     }
 
     private fun getTopRatedMovie() {
