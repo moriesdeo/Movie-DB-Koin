@@ -28,7 +28,7 @@ class HomeViewModel(
         }
     }
 
-    fun getGenreMovie() {
+    private fun getGenreMovie() {
         viewModelScope.launch {
             genreMovieUseCase.invoke().collect {
                 genreMovie.value = it
