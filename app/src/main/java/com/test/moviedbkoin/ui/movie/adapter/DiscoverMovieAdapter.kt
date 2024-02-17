@@ -17,8 +17,9 @@ class DiscoverMovieAdapter(
     inner class ViewHolder(private val binding: DiscoverMovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ListMoviesData) {
             binding.apply {
-                coverImg.loadImage(BuildConfig.MOVIE_BASE_URL + "${data.backdrop_path}")
+                coverImg.loadImage(BuildConfig.LOAD_IMAGE + "${data.poster_path}")
                 titleTv.text = data.title
+                dateTv.text = data.release_date
                 root.setOnClickListener { onclick.invoke(data) }
             }
         }

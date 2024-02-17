@@ -28,19 +28,20 @@ class GenreAdapter(
         )
     }
 
-    inner class GenreViewHolder(private val binding: GenreItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class GenreViewHolder(private val binding: GenreItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Genre) {
-            binding.titleTv.text = data.name
+            binding.apply {
+                titleTv.text = data.name
+                root.setOnClickListener {
+                    onCLick.invoke(data)
+                }
+            }
         }
     }
 
     override fun onBindViewHolder(holder: GenreAdapter.GenreViewHolder, position: Int) {
         getItem(position)?.let { data ->
             holder.bind(data)
-            holder.itemView.setOnClickListener {
-                onCLick.invoke(data)
-            }
         }
     }
 

@@ -9,9 +9,12 @@ class ListTopRatedMovieDataMapper : Mapper<ListMoviesDataResponse?, ListMoviesDa
         return ListMoviesData(
             adult = t?.adult,
             backdrop_path = t?.backdropPath,
+            poster_path = t?.posterPath,
             genre_ids = t?.genreIds,
             id = t?.id,
-            video = t?.video
+            video = t?.video,
+            title = t?.title,
+            release_date = t?.releaseDate
         )
     }
 }
