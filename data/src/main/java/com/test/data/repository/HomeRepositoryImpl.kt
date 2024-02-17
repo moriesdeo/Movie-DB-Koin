@@ -12,6 +12,7 @@ import com.test.data.service.MoviesService
 import com.test.domain.model.credentials.BaseResponseData
 import com.test.domain.model.credentials.GenreData
 import com.test.domain.model.credentials.ListMoviesData
+import com.test.domain.model.credentials.request.GeneralRequest
 import com.test.domain.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -37,6 +38,25 @@ class HomeRepositoryImpl(
             val token = BuildConfig.TOKEN
             val response = safeApiCall(Dispatchers.IO) {
                 homeService.getTopRatedMovie(token = token, lang = "en", page = page.orZero())
+                    .mapTo(listTopRatedMoviesMapper)
+            }
+            emit(response)
+        }.buildNetwork()
+    }
+
+    override suspend fun getDiscoverMovie(generalRequest: GeneralRequest?): Flow<Resource<BaseResponseData<List<ListMoviesData>>>> {
+        return flow {
+            val token = BuildConfig.TOKEN
+            val response = safeApiCall(Dispatchers.IO) {
+                homeService.getMovie(
+                    token = token,
+                    lang = "en",
+                    includeAdult = false,
+                    includeVideo = false,
+                    withGenres = generalRequest?.genre.orEmpty(),
+                    sortBy = generalRequest?.sortBy.orEmpty(),
+                    page = generalRequest?.page.orZero()
+                )
                     .mapTo(listTopRatedMoviesMapper)
             }
             emit(response)

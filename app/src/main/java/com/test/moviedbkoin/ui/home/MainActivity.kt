@@ -1,5 +1,6 @@
 package com.test.moviedbkoin.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.test.core.data.Resource
@@ -7,6 +8,7 @@ import com.test.core.extension.data
 import com.test.core.extension.observeData
 import com.test.moviedbkoin.databinding.ActivityMainBinding
 import com.test.moviedbkoin.ui.home.adapter.GenreAdapter
+import com.test.moviedbkoin.ui.movie.DiscoverMovieActivity
 import com.test.moviedbkoin.ui.utils.delegate.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -15,7 +17,9 @@ class MainActivity : AppCompatActivity() {
     private val homeViewModel: HomeViewModel by viewModel()
     private val genreAdapter: GenreAdapter by lazy {
         GenreAdapter {
-
+            startActivity(Intent(this, DiscoverMovieActivity::class.java).apply {
+                putExtra("id", it.id)
+            })
         }
     }
 
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             result?.let {
                 when (it) {
                     is Resource.Success -> {
-                        genreAdapter?.submitList(result.data()?.genres.orEmpty())
+                        genreAdapter.submitList(result.data()?.genres.orEmpty())
                     }
 
                     is Resource.Error -> {
