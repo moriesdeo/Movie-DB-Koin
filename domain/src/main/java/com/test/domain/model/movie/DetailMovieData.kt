@@ -3,7 +3,7 @@ package com.test.domain.model.movie
 data class DetailMovieData(
     var adult: Boolean? = null,
     var backdrop_path: String? = null,
-    var belongs_to_collection: Any? = null,
+    var belongs_to_collection: BelongsToCollection? = null,
     var budget: Int? = null,
     var genres: List<Genre?>? = null,
     var homepage: String? = null,

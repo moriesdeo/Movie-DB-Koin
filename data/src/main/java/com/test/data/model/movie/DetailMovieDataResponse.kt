@@ -2,6 +2,7 @@ package com.test.data.model.movie
 
 
 import com.google.gson.annotations.SerializedName
+import com.test.data.model.GenreDataResponse
 
 data class DetailMovieDataResponse(
     @SerializedName("adult")
@@ -9,11 +10,11 @@ data class DetailMovieDataResponse(
     @SerializedName("backdrop_path")
     var backdropPath: String? = null,
     @SerializedName("belongs_to_collection")
-    var belongsToCollection: Any? = null,
+    var belongsToCollection: BelongsToCollectionResponse? = null,
     @SerializedName("budget")
     var budget: Int? = null,
     @SerializedName("genres")
-    var genres: List<Genre?>? = null,
+    var genres: List<GenreDataResponse>? = null,
     @SerializedName("homepage")
     var homepage: String? = null,
     @SerializedName("id")
@@ -31,9 +32,9 @@ data class DetailMovieDataResponse(
     @SerializedName("poster_path")
     var posterPath: String? = null,
     @SerializedName("production_companies")
-    var productionCompanies: List<ProductionCompany?>? = null,
+    var productionCompanies: List<ProductionCompany>? = null,
     @SerializedName("production_countries")
-    var productionCountries: List<ProductionCountry?>? = null,
+    var productionCountries: List<ProductionCountry>? = null,
     @SerializedName("release_date")
     var releaseDate: String? = null,
     @SerializedName("revenue")
@@ -41,7 +42,7 @@ data class DetailMovieDataResponse(
     @SerializedName("runtime")
     var runtime: Int? = null,
     @SerializedName("spoken_languages")
-    var spokenLanguages: List<SpokenLanguage?>? = null,
+    var spokenLanguages: List<SpokenLanguage>? = null,
     @SerializedName("status")
     var status: String? = null,
     @SerializedName("tagline")
