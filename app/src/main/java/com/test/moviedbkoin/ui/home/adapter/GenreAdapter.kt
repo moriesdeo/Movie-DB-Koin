@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.test.domain.model.credentials.Genre
+import com.test.domain.model.movie.Genre
 import com.test.moviedbkoin.databinding.GenreItemBinding
 
 class GenreAdapter(

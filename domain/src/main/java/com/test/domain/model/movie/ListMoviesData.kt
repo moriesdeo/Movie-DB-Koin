@@ -1,4 +1,4 @@
-package com.test.domain.model.credentials
+package com.test.domain.model.movie
 
 data class ListMoviesData(
     var adult: Boolean? = null,

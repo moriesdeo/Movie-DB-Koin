@@ -3,9 +3,11 @@ package com.test.data.service
 import com.test.data.model.GenreResponse
 import com.test.data.model.ListMoviesDataResponse
 import com.test.data.model.base.BaseResponse
+import com.test.data.model.movie.DetailMovieDataResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MoviesService {
@@ -35,4 +37,12 @@ interface MoviesService {
         @Query("with_genres") withGenres: String,
         @Query("page") page: Int,
     ): BaseResponse<List<ListMoviesDataResponse>>
+
+    @GET("movie/{movie_id}")
+    @Headers("Content-Type:application/json")
+    suspend fun getDetailMovie(
+        @Header("Authorization") token: String,
+        @Path("movie_id") movieID: Int,
+        @Query("language") lang: String
+    ): DetailMovieDataResponse
 }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.test.core.extension.loadImage
-import com.test.domain.model.credentials.ListMoviesData
+import com.test.domain.model.movie.ListMoviesData
 import com.test.moviedbkoin.BuildConfig
 import com.test.moviedbkoin.databinding.DiscoverMovieItemBinding
 

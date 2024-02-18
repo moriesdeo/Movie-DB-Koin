@@ -1,4 +1,4 @@
-package com.test.domain.model.credentials
+package com.test.domain.model.home
 
 data class BaseResponseData<T>(
     var page: Int? = null,

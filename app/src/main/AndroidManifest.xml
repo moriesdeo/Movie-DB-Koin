@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MovieDBKoin"
         tools:targetApi="31">
         <activity
+            android:name=".ui.movie.DetailMovieActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.movie.DiscoverMovieActivity"
             android:exported="false" />
         <activity

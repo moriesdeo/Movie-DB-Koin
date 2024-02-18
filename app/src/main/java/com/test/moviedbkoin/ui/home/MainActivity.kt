@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        homeViewModel.getGenreMovie()
         binding.apply {
             genreRv.adapter = genreAdapter
         }

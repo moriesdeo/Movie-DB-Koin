@@ -1,11 +1,12 @@
 package com.test.moviedbkoin.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.test.core.data.Resource
 import com.test.core.extension.data
 import com.test.core.extension.observeData
-import com.test.domain.model.credentials.request.GeneralRequest
+import com.test.domain.model.home.request.GeneralRequest
 import com.test.moviedbkoin.databinding.ActivityDiscoverMovieBinding
 import com.test.moviedbkoin.ui.home.HomeViewModel
 import com.test.moviedbkoin.ui.movie.adapter.DiscoverMovieAdapter
@@ -17,7 +18,9 @@ class DiscoverMovieActivity : AppCompatActivity() {
     private val homeViewModel: HomeViewModel by viewModel()
     private val discoverMovieAdapter by lazy {
         DiscoverMovieAdapter {
-
+            startActivity(Intent(this, DetailMovieActivity::class.java).apply {
+                putExtra("id", it.id)
+            })
         }
     }
 

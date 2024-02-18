@@ -7,12 +7,14 @@ import com.test.data.BuildConfig
 import com.test.data.extensions.ValueExt.orZero
 import com.test.data.home.ListGenreMovieMapper
 import com.test.data.home.ListTopRatedMoviesMapper
+import com.test.data.movie.DetailMovieMapper
 import com.test.data.safeApiCall
 import com.test.data.service.MoviesService
-import com.test.domain.model.credentials.BaseResponseData
-import com.test.domain.model.credentials.GenreData
-import com.test.domain.model.credentials.ListMoviesData
-import com.test.domain.model.credentials.request.GeneralRequest
+import com.test.domain.model.home.BaseResponseData
+import com.test.domain.model.home.GenreData
+import com.test.domain.model.home.request.GeneralRequest
+import com.test.domain.model.movie.DetailMovieData
+import com.test.domain.model.movie.ListMoviesData
 import com.test.domain.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +23,8 @@ import kotlinx.coroutines.flow.flow
 class HomeRepositoryImpl(
     private val homeService: MoviesService,
     private val listGenreMapper: ListGenreMovieMapper,
-    private val listTopRatedMoviesMapper: ListTopRatedMoviesMapper
+    private val listTopRatedMoviesMapper: ListTopRatedMoviesMapper,
+    private val detailMovieMapper: DetailMovieMapper
 ) : MoviesRepository {
     override suspend fun getGenreMovie(): Flow<Resource<GenreData>> {
         return flow {
@@ -58,6 +61,20 @@ class HomeRepositoryImpl(
                     page = generalRequest?.page.orZero()
                 )
                     .mapTo(listTopRatedMoviesMapper)
+            }
+            emit(response)
+        }.buildNetwork()
+    }
+
+    override suspend fun getDetailMovie(generalRequest: GeneralRequest?): Flow<Resource<DetailMovieData>> {
+        return flow {
+            val token = BuildConfig.TOKEN
+            val response = safeApiCall(Dispatchers.IO) {
+                homeService.getDetailMovie(
+                    token = token,
+                    lang = "en",
+                    movieID = generalRequest?.movieID.orZero()
+                ).mapTo(detailMovieMapper)
             }
             emit(response)
         }.buildNetwork()

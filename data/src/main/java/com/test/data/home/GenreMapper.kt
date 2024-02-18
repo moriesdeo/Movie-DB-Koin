@@ -2,7 +2,7 @@ package com.test.data.home
 
 import com.test.core.network.Mapper
 import com.test.data.model.GenreDataResponse
-import com.test.domain.model.credentials.Genre
+import com.test.domain.model.movie.Genre
 
 class GenreMapper : Mapper<GenreDataResponse, Genre?> {
     override fun to(t: GenreDataResponse): Genre {

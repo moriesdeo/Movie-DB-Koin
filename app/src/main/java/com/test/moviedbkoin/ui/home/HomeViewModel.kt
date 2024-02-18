@@ -4,11 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.core.data.Resource
-import com.test.domain.model.credentials.BaseResponseData
-import com.test.domain.model.credentials.GenreData
-import com.test.domain.model.credentials.ListMoviesData
-import com.test.domain.model.credentials.request.GeneralRequest
+import com.test.domain.model.home.BaseResponseData
+import com.test.domain.model.home.GenreData
+import com.test.domain.model.home.request.GeneralRequest
+import com.test.domain.model.movie.DetailMovieData
+import com.test.domain.model.movie.ListMoviesData
 import com.test.domain.usecase.home.GetGenreMovieUseCase
+import com.test.domain.usecase.movie.GetDetailMovieUseCase
 import com.test.domain.usecase.movie.GetMovieUseCase
 import com.test.domain.usecase.movie.GetTopRatedMovieUseCase
 import kotlinx.coroutines.launch
@@ -16,13 +18,15 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val genreMovieUseCase: GetGenreMovieUseCase,
     private val getTopRatedMovieUseCase: GetTopRatedMovieUseCase,
-    private val getMovieUseCase: GetMovieUseCase
+    private val getMovieUseCase: GetMovieUseCase,
+    private val getDetailMovieUseCase: GetDetailMovieUseCase
 ) : ViewModel() {
     val genreMovie = MutableLiveData<Resource<GenreData>>()
     val movie = MutableLiveData<Resource<BaseResponseData<List<ListMoviesData>>>>()
+    val detailMovie = MutableLiveData<Resource<DetailMovieData>>()
 
     init {
-        getGenreMovie()
+
     }
 
     private fun getTopRatedMovie() {
@@ -41,10 +45,18 @@ class HomeViewModel(
         }
     }
 
-    private fun getGenreMovie() {
+    fun getGenreMovie() {
         viewModelScope.launch {
             genreMovieUseCase.invoke().collect {
                 genreMovie.value = it
+            }
+        }
+    }
+
+    fun getDetailMovie(generalRequest: GeneralRequest) {
+        viewModelScope.launch {
+            getDetailMovieUseCase.invoke(generalRequest).collect {
+                detailMovie.value = it
             }
         }
     }

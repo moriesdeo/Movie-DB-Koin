@@ -2,7 +2,7 @@ package com.test.data.home
 
 import com.test.core.network.Mapper
 import com.test.data.model.ListMoviesDataResponse
-import com.test.domain.model.credentials.ListMoviesData
+import com.test.domain.model.movie.ListMoviesData
 
 class ListTopRatedMovieDataMapper : Mapper<ListMoviesDataResponse?, ListMoviesData> {
     override fun to(t: ListMoviesDataResponse?): ListMoviesData {
