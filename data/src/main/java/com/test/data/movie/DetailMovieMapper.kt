@@ -25,6 +25,7 @@ class DetailMovieMapper(
             backdrop_path = t.backdropPath,
             release_date = t.releaseDate,
             popularity = t.popularity,
+            imdb_id = t.imdbId,
             belongs_to_collection = BelongsToCollection(
                 backdrop_path = t.belongsToCollection?.backdropPath,
                 poster_path = t.belongsToCollection?.posterPath,

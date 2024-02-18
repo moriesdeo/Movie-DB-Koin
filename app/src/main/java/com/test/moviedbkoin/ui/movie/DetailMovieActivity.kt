@@ -1,11 +1,15 @@
 package com.test.moviedbkoin.ui.movie
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.test.core.data.Resource
 import com.test.core.extension.data
 import com.test.core.extension.loadImage
 import com.test.core.extension.observeData
+import com.test.core.extension.toast
 import com.test.domain.model.home.request.GeneralRequest
 import com.test.domain.model.movie.DetailMovieData
 import com.test.moviedbkoin.BuildConfig
@@ -77,6 +81,18 @@ class DetailMovieActivity : AppCompatActivity() {
             productionCompanyAdapter.submitList(data?.production_companies)
             productionCountriesAdapter.submitList(data?.production_countries)
             spokenLanguageAdapter.submitList(data?.spoken_languages)
+            openYoutubeIv.setOnClickListener {
+                try {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://www.youtube.com/watch?v=${data?.imdb_id}")
+                        )
+                    )
+                } catch (e: ActivityNotFoundException) {
+                    toast("Alamat url tidak ditemukan")
+                }
+            }
         }
     }
 }
