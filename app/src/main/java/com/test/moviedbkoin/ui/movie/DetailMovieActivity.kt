@@ -59,6 +59,32 @@ class DetailMovieActivity : AppCompatActivity() {
                 }
             }
         }
+        observeData(homeViewModel.videos) { result ->
+            result?.let {
+                when (it) {
+                    is Resource.Error -> {
+
+                    }
+
+                    is Resource.Loading -> {
+
+                    }
+
+                    is Resource.Success -> {
+                        try {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://www.youtube.com/watch?v=${result.data()?.results?.first()?.key}")
+                                )
+                            )
+                        } catch (e: ActivityNotFoundException) {
+                            toast("Alamat url tidak ditemukan")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun initView() {
@@ -82,16 +108,7 @@ class DetailMovieActivity : AppCompatActivity() {
             productionCountriesAdapter.submitList(data?.production_countries)
             spokenLanguageAdapter.submitList(data?.spoken_languages)
             openYoutubeIv.setOnClickListener {
-                try {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("https://www.youtube.com/watch?v=${data?.imdb_id}")
-                        )
-                    )
-                } catch (e: ActivityNotFoundException) {
-                    toast("Alamat url tidak ditemukan")
-                }
+                homeViewModel.getVideos(GeneralRequest(movieID = data?.id))
             }
         }
     }
