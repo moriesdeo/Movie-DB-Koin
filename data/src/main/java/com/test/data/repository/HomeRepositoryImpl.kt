@@ -8,6 +8,7 @@ import com.test.data.extensions.ValueExt.orZero
 import com.test.data.home.ListGenreMovieMapper
 import com.test.data.home.ListTopRatedMoviesMapper
 import com.test.data.movie.DetailMovieMapper
+import com.test.data.movie.ReviewMapper
 import com.test.data.movie.VideosMapper
 import com.test.data.safeApiCall
 import com.test.data.service.MoviesService
@@ -16,6 +17,7 @@ import com.test.domain.model.home.GenreData
 import com.test.domain.model.home.request.GeneralRequest
 import com.test.domain.model.movie.DetailMovieData
 import com.test.domain.model.movie.ListMoviesData
+import com.test.domain.model.movie.ReviewData
 import com.test.domain.model.movie.VideosData
 import com.test.domain.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +29,8 @@ class HomeRepositoryImpl(
     private val listGenreMapper: ListGenreMovieMapper,
     private val listTopRatedMoviesMapper: ListTopRatedMoviesMapper,
     private val detailMovieMapper: DetailMovieMapper,
-    private val videosMapper: VideosMapper
+    private val videosMapper: VideosMapper,
+    private val reviewMapper: ReviewMapper
 ) : MoviesRepository {
     override suspend fun getGenreMovie(): Flow<Resource<GenreData>> {
         return flow {
@@ -62,8 +65,7 @@ class HomeRepositoryImpl(
                     withGenres = generalRequest?.genre.orEmpty(),
                     sortBy = generalRequest?.sortBy.orEmpty(),
                     page = generalRequest?.page.orZero()
-                )
-                    .mapTo(listTopRatedMoviesMapper)
+                ).mapTo(listTopRatedMoviesMapper)
             }
             emit(response)
         }.buildNetwork()
@@ -74,9 +76,7 @@ class HomeRepositoryImpl(
             val token = BuildConfig.TOKEN
             val response = safeApiCall(Dispatchers.IO) {
                 homeService.getDetailMovie(
-                    token = token,
-                    lang = "en",
-                    movieID = generalRequest?.movieID.orZero()
+                    token = token, lang = "en", movieID = generalRequest?.movieID.orZero()
                 ).mapTo(detailMovieMapper)
             }
             emit(response)
@@ -88,10 +88,22 @@ class HomeRepositoryImpl(
             val token = BuildConfig.TOKEN
             val response = safeApiCall(Dispatchers.IO) {
                 homeService.getVideos(
-                    token = token,
-                    lang = "en",
+                    token = token, lang = "en",
                     movieID = generalRequest?.movieID.orZero()
                 ).mapTo(videosMapper)
+            }
+            emit(response)
+        }.buildNetwork()
+    }
+
+    override suspend fun getReviews(generalRequest: GeneralRequest?): Flow<Resource<BaseResponseData<List<ReviewData>>>> {
+        return flow {
+            val token = BuildConfig.TOKEN
+            val response = safeApiCall(Dispatchers.IO) {
+                homeService.getReviews(
+                    token = token, lang = "en",
+                    movieID = generalRequest?.movieID.orZero()
+                ).mapTo(reviewMapper)
             }
             emit(response)
         }.buildNetwork()

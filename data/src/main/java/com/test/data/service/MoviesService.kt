@@ -4,6 +4,7 @@ import com.test.data.model.GenreResponse
 import com.test.data.model.ListMoviesDataResponse
 import com.test.data.model.base.BaseResponse
 import com.test.data.model.movie.DetailMovieDataResponse
+import com.test.data.model.movie.ReviewDataResponse
 import com.test.data.model.movie.VideosDataResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -54,4 +55,12 @@ interface MoviesService {
         @Path("movie_id") movieID: Int,
         @Query("language") lang: String
     ): BaseResponse<List<VideosDataResponse>>
+
+    @GET("/movie/{movie_id}/reviews")
+    @Headers("Content-Type:application/json")
+    suspend fun getReviews(
+        @Header("Authorization") token: String,
+        @Path("movie_id") movieID: Int,
+        @Query("language") lang: String
+    ): BaseResponse<List<ReviewDataResponse>>
 }

@@ -9,6 +9,8 @@ import com.test.data.home.ProductionCountryMapper
 import com.test.data.home.SpokenLanguageMapper
 import com.test.data.movie.DetailMovieMapper
 import com.test.data.movie.ListMovieMapper
+import com.test.data.movie.ReviewMapper
+import com.test.data.movie.ReviewsListMapper
 import com.test.data.movie.VideosMapper
 import org.koin.dsl.module
 
@@ -20,7 +22,9 @@ val mapperModule = module {
     factory { ProductionCountryMapper() }
     factory { SpokenLanguageMapper() }
     factory { ListMovieMapper() }
+    factory { ReviewsListMapper() }
     factory { VideosMapper(get()) }
+    factory { ReviewMapper(get()) }
     factory { ListTopRatedMoviesMapper(get()) }
     factory { DetailMovieMapper(get(), get(), get(), get()) }
 }

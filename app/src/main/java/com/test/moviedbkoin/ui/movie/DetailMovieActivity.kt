@@ -10,13 +10,16 @@ import com.test.core.extension.data
 import com.test.core.extension.loadImage
 import com.test.core.extension.observeData
 import com.test.core.extension.toast
+import com.test.domain.model.home.BaseResponseData
 import com.test.domain.model.home.request.GeneralRequest
 import com.test.domain.model.movie.DetailMovieData
+import com.test.domain.model.movie.ReviewData
 import com.test.moviedbkoin.BuildConfig
 import com.test.moviedbkoin.databinding.ActivityDetailMovieBinding
 import com.test.moviedbkoin.ui.home.HomeViewModel
 import com.test.moviedbkoin.ui.movie.adapter.ProductionCompanyAdapter
 import com.test.moviedbkoin.ui.movie.adapter.ProductionCountriesAdapter
+import com.test.moviedbkoin.ui.movie.adapter.ReviewsAdapter
 import com.test.moviedbkoin.ui.movie.adapter.SpokenLanguageAdapter
 import com.test.moviedbkoin.ui.utils.delegate.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,17 +36,36 @@ class DetailMovieActivity : AppCompatActivity() {
     private val productionCompanyAdapter by lazy {
         ProductionCompanyAdapter()
     }
+    private val reviewsAdapter by lazy {
+        ReviewsAdapter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         homeViewModel.getDetailMovie(GeneralRequest(movieID = intent.getIntExtra("id", 0)))
+        homeViewModel.getReviews(GeneralRequest(movieID = intent.getIntExtra("id", 0)))
         initView()
         observable()
     }
 
     private fun observable() {
+        observeData(homeViewModel.reviews) { result ->
+            result?.let {
+                when (it) {
+                    is Resource.Success -> {
+                        setReviews(result.data())
+                    }
+
+                    is Resource.Error -> {
+
+                    }
+
+                    else -> {}
+                }
+            }
+        }
         observeData(homeViewModel.detailMovie) { result ->
             result?.let {
                 when (it) {
@@ -84,6 +106,12 @@ class DetailMovieActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setReviews(data: BaseResponseData<List<ReviewData>>?) {
+        binding.apply {
+            reviewRv.adapter = reviewsAdapter
         }
     }
 
