@@ -21,7 +21,13 @@ class ReviewsAdapter : ListAdapter<ReviewData, ReviewsAdapter.ViewHolder>(Review
 
     inner class ViewHolder(val binding: ItemReviewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ReviewData){
-
+            binding.apply {
+                contentTv.text = data.content
+                nameTv.text = data.author_details?.name
+                usernameTv.text = data.author_details?.username
+                ratingTv.text = data.author_details?.rating.toString()
+                authorTv.text = data.author
+            }
         }
     }
 
