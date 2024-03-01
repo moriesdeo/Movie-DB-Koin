@@ -45,7 +45,7 @@ class DetailMovieActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         homeViewModel.getDetailMovie(GeneralRequest(movieID = intent.getIntExtra("id", 0)))
-        homeViewModel.getReviews(GeneralRequest(movieID = intent.getIntExtra("id", 0)))
+        homeViewModel.getReviews(GeneralRequest(page = 1, movieID = intent.getIntExtra("id", 0)))
         initView()
         observable()
     }
@@ -111,7 +111,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun setReviews(data: BaseResponseData<List<ReviewData>>?) {
         binding.apply {
-            reviewRv.adapter = reviewsAdapter
+            reviewsAdapter.submitList(data?.results)
         }
     }
 
@@ -120,6 +120,7 @@ class DetailMovieActivity : AppCompatActivity() {
             spokenLanguageRv.adapter = spokenLanguageAdapter
             productionCompaniesRv.adapter = productionCompanyAdapter
             productionCountriesRv.adapter = productionCountriesAdapter
+            reviewRv.adapter = reviewsAdapter
         }
     }
 

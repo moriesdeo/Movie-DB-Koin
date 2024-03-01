@@ -56,7 +56,7 @@ interface MoviesService {
         @Query("language") lang: String
     ): BaseResponse<List<VideosDataResponse>>
 
-    @GET("/movie/{movie_id}/reviews")
+    @GET("movie/{movie_id}/reviews")
     @Headers("Content-Type:application/json")
     suspend fun getReviews(
         @Header("Authorization") token: String,

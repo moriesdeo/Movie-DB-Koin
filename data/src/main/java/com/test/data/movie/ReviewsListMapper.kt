@@ -9,8 +9,13 @@ class ReviewsListMapper : Mapper<ReviewDataResponse, ReviewData> {
     override fun to(t: ReviewDataResponse): ReviewData {
         return ReviewData(
             author = t.author,
-            author_details = AuthorDetails(t.authorDetails),
+            author_details = AuthorDetails(
+                username = t.authorDetails?.username,
+                name = t.authorDetails?.name,
+                rating = t.authorDetails?.rating
+            ),
             id = t.id,
+            content = t.content
         )
     }
 }
